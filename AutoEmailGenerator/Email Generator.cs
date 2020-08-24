@@ -9,8 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Net;
 using System.Net.Mail;
-using System.IO;
-using IronXL;
+
 
 
 namespace AutoEmailGenerator
@@ -23,27 +22,16 @@ namespace AutoEmailGenerator
         }
         public void sendEmail(SmtpClient smtp)
         {
-            //MailMessage mail = new MailMessage();
-            //mail.From = new MailAddress(username.Text);
-            //mail.To.Add(receiver.Text);
-            //mail.Subject = subject.Text;
-            //mail.Body = body.Text;
-            //smtp.Send(mail);
+            MailMessage mail = new MailMessage();
+            mail.From = new MailAddress(username.Text);
+            mail.To.Add(receiver.Text);
+            mail.Subject = subject.Text;
+            mail.Body = body.Text;
+            smtp.Send(mail);
 
-            WorkBook workBook = new WorkBook("C:\\Users\\Rinald\\Desktop\\Vendor Details_Scan Pack Phase Wise.xlsx");
-            WorkSheet sheet = workBook.WorkSheets.First();
-
-            MessageBox.Show("Message changr sent successfully ");
-            var range = sheet["A2:A10"];
-            foreach (var cell in range)
-            {
-                MessageBox.Show(cell.Value.ToString());
-            }
-            //StreamReader str = new StreamReader("C:\\Users\\Rinald\\Desktop\\sample.docx");
-
-
+           
             receiver.Text = "";
-            MessageBox.Show("Message changr sent successfully ");
+            MessageBox.Show("E-mail sent successfully ");
         }
         private void button1_Click(object sender, EventArgs e)
         {
@@ -56,12 +44,12 @@ namespace AutoEmailGenerator
                 else
                 {
                     SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587);
-                    //smtp.UseDefaultCredentials = false;
-                    //smtp.EnableSsl = true;
-                    //NetworkCredential nc = new NetworkCredential(username.Text, pwd.Text);
-                    //smtp.Credentials = nc;
-                    //Form2 form2 = new Form2();
-                    
+                    smtp.UseDefaultCredentials = false;
+                    smtp.EnableSsl = true;
+                    NetworkCredential nc = new NetworkCredential(username.Text, pwd.Text);
+                    smtp.Credentials = nc;
+
+
                     sendEmail(smtp);
                 }
             }
